@@ -1,18 +1,26 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native'
+import { Post } from "../components/Post"
+import { DATA } from "../data"
 
-export const MainScreen = ({}) => {
-  return (
-    <View style={styles.center}>
-      <Text>MainScreen</Text>
-    </View>
-  )
+export const MainScreen = ({ navigation }) => {
+    const onOpenHandler = (post) => {
+        navigation.navigate("Post", { postId: post.id, date: post.date })
+    }
+
+    return (
+        <View style={styles.wrap}>
+            <FlatList data={DATA} keyExtractor={post => post.id.toString()} renderItem={({ item }) => <Post post={item} onOpen={onOpenHandler} />} />
+        </View>
+    )
+}
+
+MainScreen.navigationOptions = {
+    headerTitle: "My blog"
 }
 
 const styles = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    wrap: {
+        padding: 10
+    }
 })
