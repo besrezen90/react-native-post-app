@@ -11,7 +11,7 @@ import {
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { THEME } from '../theme'
-import { toggleBooked } from '../store/actions/post'
+import { toggleBooked, removePost } from '../store/actions/post'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const PostScreen = ({ navigation }) => {
@@ -38,6 +38,10 @@ export const PostScreen = ({ navigation }) => {
 
 	const post = allPosts.find(el => el.id === postId)
 
+	if (!post) {
+		return null
+	}
+
 	const onDelete = () => {
 		Alert.alert(
 			'Delete post',
@@ -49,7 +53,10 @@ export const PostScreen = ({ navigation }) => {
 				},
 				{
 					text: 'Delete',
-					onPress: () => console.log('OK Pressed'),
+					onPress: () => {
+						navigation.navigate('Main')
+						dispatch(removePost(postId))
+					},
 					style: 'destructive',
 				},
 			],
