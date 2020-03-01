@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
 	View,
 	Text,
@@ -10,13 +10,33 @@ import {
 } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
-import { DATA } from '../data'
 import { THEME } from '../theme'
+import { toggleBooked } from '../store/actions/post'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const PostScreen = ({ navigation }) => {
+	const dispatch = useDispatch()
 	const postId = navigation.getParam('postId')
 
-	const post = DATA.find(el => el.id === postId)
+	const toggleHandler = useCallback(() => {
+		dispatch(toggleBooked(postId))
+	}, [dispatch, postId])
+
+	const allPosts = useSelector(state => state.post.allPosts)
+
+	const booked = useSelector(store =>
+		store.post.bookedPosts.some(post => post.id === postId)
+	)
+
+	useEffect(() => {
+		navigation.setParams({ booked })
+	}, [booked])
+
+	useEffect(() => {
+		navigation.setParams({ toggleHandler })
+	}, [toggleHandler])
+
+	const post = allPosts.find(el => el.id === postId)
 
 	const onDelete = () => {
 		Alert.alert(
@@ -54,6 +74,7 @@ export const PostScreen = ({ navigation }) => {
 
 PostScreen.navigationOptions = ({ navigation }) => {
 	const date = navigation.getParam('date')
+	const toggleHandler = navigation.getParam('toggleHandler')
 
 	const iconName = navigation.getParam('booked')
 		? 'ios-star'
@@ -66,7 +87,7 @@ PostScreen.navigationOptions = ({ navigation }) => {
 				<Item
 					title="Take photo"
 					iconName={iconName}
-					onPress={() => console.log('Press photo')}
+					onPress={toggleHandler}
 				/>
 			</HeaderButtons>
 		),

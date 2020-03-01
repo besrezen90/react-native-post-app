@@ -6,13 +6,16 @@ import { AppHeaderIcon } from '../components/AppHeaderIcon'
 export const AboutScreen = ({}) => {
 	return (
 		<View style={styles.center}>
-			<Text>AboutScreen</Text>
+			<Text>This is the best app for personal notes.</Text>
+			<Text>
+				Version <Text style={styles.text}> 1.0.0</Text>
+			</Text>
 		</View>
 	)
 }
 
 AboutScreen.navigationOptions = ({ navigation }) => ({
-	headerTitle: 'About',
+	headerTitle: 'About us',
 
 	headerLeft: (
 		<HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
@@ -30,5 +33,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	text: {
+		fontFamily: 'open-bold',
 	},
 })

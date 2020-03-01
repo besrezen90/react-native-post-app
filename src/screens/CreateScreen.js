@@ -12,7 +12,7 @@ export const CreateScreen = ({}) => {
 }
 
 CreateScreen.navigationOptions = ({ navigation }) => ({
-	headerTitle: 'Create post',
+	headerTitle: 'Create new post',
 
 	headerLeft: (
 		<HeaderButtons HeaderButtonComponent={AppHeaderIcon}>

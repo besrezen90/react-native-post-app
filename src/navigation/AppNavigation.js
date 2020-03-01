@@ -77,22 +77,51 @@ const BottomNavigator =
 
 const AboutNavigator = createStackNavigator(
 	{
-		About: AboutScreen,
+		About: {
+			screen: AboutScreen,
+		},
 	},
 	navOptions
 )
 
 const CreateNavigator = createStackNavigator(
 	{
-		Create: CreateScreen,
+		Create: {
+			screen: CreateScreen,
+		},
 	},
 	navOptions
 )
 
-const MainNavigator = createDrawerNavigator({
-	PostTabs: BottomNavigator,
-	About: AboutNavigator,
-	Create: CreateNavigator,
-})
+const MainNavigator = createDrawerNavigator(
+	{
+		PostTabs: {
+			screen: BottomNavigator,
+			navigationOptions: {
+				drawerLabel: 'Main',
+			},
+		},
+		About: {
+			screen: AboutNavigator,
+			navigationOptions: {
+				drawerLabel: 'About us',
+			},
+		},
+		Create: {
+			screen: CreateNavigator,
+			navigationOptions: {
+				drawerLabel: 'Create new post',
+			},
+		},
+	},
+	{
+		contentOptions: {
+			activeTintColor: THEME.MAIN_COLOR,
+			labelStyle: {
+				fontFamily: 'open-bold',
+			},
+		},
+	}
+)
 
 export const AppNavigation = createAppContainer(MainNavigator)
