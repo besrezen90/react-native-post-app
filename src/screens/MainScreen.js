@@ -1,17 +1,17 @@
 import React from 'react'
 import { View, Text, StyleSheet, Button, FlatList } from 'react-native'
-import {
-	HeaderButtons,
-	Item,
-	HeaderButton,
-} from 'react-navigation-header-buttons'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { Post } from '../components/Post'
 import { DATA } from '../data'
 import { AppHeaderIcon } from '../components/AppHeaderIcon'
 
 export const MainScreen = ({ navigation }) => {
 	const onOpenHandler = post => {
-		navigation.navigate('Post', { postId: post.id, date: post.date })
+		navigation.navigate('Post', {
+			postId: post.id,
+			date: post.date,
+			booked: post.booked,
+		})
 	}
 
 	return (
@@ -19,7 +19,9 @@ export const MainScreen = ({ navigation }) => {
 			<FlatList
 				data={DATA}
 				keyExtractor={post => post.id.toString()}
-				renderItem={({ item }) => <Post post={item} onOpen={onOpenHandler} />}
+				renderItem={({ item }) => (
+					<Post post={item} onOpen={onOpenHandler} />
+				)}
 			/>
 		</View>
 	)
@@ -32,6 +34,15 @@ MainScreen.navigationOptions = {
 			<Item
 				title="Take photo"
 				iconName="ios-camera"
+				onPress={() => console.log('Press photo')}
+			/>
+		</HeaderButtons>
+	),
+	headerLeft: (
+		<HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+			<Item
+				title="Toggle Drawer"
+				iconName="ios-menu"
 				onPress={() => console.log('Press photo')}
 			/>
 		</HeaderButtons>

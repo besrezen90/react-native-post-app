@@ -8,6 +8,8 @@ import {
 	ScrollView,
 	Alert,
 } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { DATA } from '../data'
 import { THEME } from '../theme'
 
@@ -41,15 +43,33 @@ export const PostScreen = ({ navigation }) => {
 			<View style={styles.textWrap}>
 				<Text style={styles.text}>{post.text}</Text>
 			</View>
-			<Button title="Delete" color={THEME.DANGER_COLOR} onPress={onDelete} />
+			<Button
+				title="Delete"
+				color={THEME.DANGER_COLOR}
+				onPress={onDelete}
+			/>
 		</ScrollView>
 	)
 }
 
 PostScreen.navigationOptions = ({ navigation }) => {
 	const date = navigation.getParam('date')
+
+	const iconName = navigation.getParam('booked')
+		? 'ios-star'
+		: 'ios-star-outline'
+
 	return {
 		headerTitle: `Post ${new Date(date).toLocaleDateString()}`,
+		headerRight: (
+			<HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
+				<Item
+					title="Take photo"
+					iconName={iconName}
+					onPress={() => console.log('Press photo')}
+				/>
+			</HeaderButtons>
+		),
 	}
 }
 
