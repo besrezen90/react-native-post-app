@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions'
 import { View, StyleSheet, Image, Button, Alert } from 'react-native'
