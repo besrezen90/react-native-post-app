@@ -15,23 +15,28 @@ import { AppHeaderIcon } from '../components/AppHeaderIcon'
 import { THEME } from '../theme'
 import { useDispatch } from 'react-redux'
 import { addPost } from '../store/actions/post'
+import { PhotoPicker } from '../components/PhotoPicker'
 
 export const CreateScreen = ({ navigation }) => {
 	const [text, setText] = useState('')
-
-	const img =
-		'https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg'
+	const [image, setImage] = useState('')
 
 	const dispatch = useDispatch()
+
+	const onPick = uri => {
+		setImage(uri)
+	}
 
 	const onSave = () => {
 		const post = {
 			date: new Date().toJSON(),
 			text,
-			img,
+			img: image,
 			booked: false,
 		}
 		dispatch(addPost(post))
+		setText('')
+		setImage('')
 		navigation.navigate('Main')
 	}
 
@@ -48,17 +53,13 @@ export const CreateScreen = ({ navigation }) => {
 						multiline
 					/>
 
-					<Image
-						source={{
-							uri: img,
-						}}
-						style={{ width: '100%', height: 200, marginBottom: 10 }}
-					/>
+					<PhotoPicker onPick={onPick} image={image} />
 
 					<Button
 						title="Create post"
 						color={THEME.MAIN_COLOR}
 						onPress={onSave}
+						disabled={!text || !image}
 					/>
 				</View>
 			</TouchableWithoutFeedback>
